@@ -1,0 +1,67 @@
+Task 1.1(A)
+Super keys: {EmpID}, {SSN}, {SSN, Name}, {EmpID, Name}, {EmpID, Department}, {Phone, Department}
+Candidate keys: {EmpId}, {SSN}, {Email}
+- I would choose {EmpId} as a primary key, because it is a unique and simple attribute.
+- Based on a data shown employees can not have the same phone number, but in a reality there could be case that two people share the same work phone.
+
+Task 1.1(B)
+- Minimum number of attributes that are needed to form a primary key is 5, these are {StudentID, CourseCode, Section, Semester, Year}. {StudentID} is necessary because we need to understand with whom student we are dealing with, {Coursecode} is needed to understand which course we consider,role of {Section} is to differentiate multiple offerings of the same course in the same semester/year.{Year, Semester} tells us the time and calendar year in which student took the course, so it will follow the Business Rules.
+- There is no candidate key, because all unique attributes were chosen in primary, and we can not use the same attributes twice. Grade and Credits will not give useful information.
+
+Task 1.2
+Foreign keys: 1)Department.ChairID → Professor.ProfID, 2)Enrollment.CourseID → Course.CourseID 3)Course.DepartmentCode → Department.DeptCode 4)Enrollment.StudentID → Student.StudentID 5)Student.AdvisorID → Professor.ProfID
+
+Task 4.1
+- 1)Functional dependencies:
+    -StudentID -> StudentName, StudentMajor
+    -ProjectID -> ProjectTitle, ProjectType, SupervisorID
+    -SupervisorID -> SupervisorName, SupervisorDept
+    -(StudentID, ProjectID) -> Role, HoursWorked, StartDate, EndDate
+
+- 2) Redundancy:
+    1) Repeating of Student names, projects, supervisor.
+    2)Update anomaly: Changing SupervisorID require updating all data.
+     -If a supervisor changes department (SupervisorDept), you must update every row for every (student, project) where that supervisor appears. If one row is forgotten , the database becomes inconsistent.
+    3)Insert anomaly: impossible to insert project without student.
+     -If implementation requires inserting into StudentProject only, one cannot add a project record without inventing a StudentID.
+    4)Delete anomaly: if one delete the data of student they lose the data about project.
+     -If the last student assigned to a project is removed (row deleted), one lose information about the project itself, if it was only stored in this table
+
+- 3) No 1NF violations. The table represents atomic attributes.
+- 4) (StudentID, ProjectID)
+     Partial dependency: StudentID → StudentName, Major; ProjectID -> ProjectTitle, Type, SupervisorID.
+     2NF Decomposition:
+        -Student(StudentID, StudentName, Major)
+        -Project(ProjectID, ProjectTitle, ProjectType, SupervisorID)
+        -Supervisor(SupervisorID, SupervisorName, SupervisorDept)
+        -StudentProject(StudentID, ProjectID, Role, HoursWorked, StartDate, EndDate)
+
+- 5) Transitive dependency: SupervisorID -> SupervisorDept
+    3NF Decomposition:
+    -Student(StudentID, Name, Major)
+    -Project(ProjectID, Title, Type, SupervisorID)
+    -Supervisor(SupervisorID, Name, Dept)
+    -StudentProject(StudentID, ProjectID, Role, HoursWorked, StartDate, EndDate)
+
+Task 4.2
+- 1) Primary key:{StudentID, CourseID, TimeSlot, Room}
+- 2) Functional dependencies:
+    -StudentID -> StudentMajor
+    -CourseID -> CourseName
+    -InstructorID → InstructorName
+    -Room -> Building
+    -(CourseID, TimeSlot, Room) → InstructorID
+- 3) No, because StudentID -> StudentMajor dependency violates BCNF. StudentID is not a super key.BCNF rule: for every non-trivial Functional dependencies X -> Y, X must be a super key.
+- 4) BCNF Decomposition:
+    -Student(StudentID, Major)
+    -Course(CourseID, CourseName)
+    -Instructor(InstructorID, InstructorName)
+    -Room(Room, Building)
+    -Section(CourseID, TimeSlot, Room, InstructorID)
+    -Enrollment(StudentID, CourseID, TimeSlot, Room)
+5) There is no real loss of information in the BCNF decomposition.
+    -All original attributes (Student, Course, Instructor, Room, Building, Enrollment) are still present in the new tables.
+    -Any original row can be reconstructed by joining the decomposed tables.
+The only thing that changes is that the information is now spread across several smaller tables instead of one big table.
+
+

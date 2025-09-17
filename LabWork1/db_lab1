@@ -9,7 +9,7 @@ Task 1.1(B)
 - There is no candidate key, because all unique attributes were chosen in primary, and we can not use the same attributes twice. Grade and Credits will not give useful information.
 
 Task 1.2
-Foreign keys: 1)Department.ChairID → Professor.ProfID, 2)Enrollment.CourseID → Course.CourseID 3)Course.DepartmentCode → Department.DeptCode 4)Enrollment.StudentID → Student.StudentID 5)Student.AdvisorID → Professor.ProfID
+Foreign keys: 1)Department.ChairID -> Professor.ProfID, 2)Enrollment.CourseID -> Course.CourseID 3)Course.DepartmentCode -> Department.DeptCode 4)Enrollment.StudentID -> Student.StudentID 5)Student.AdvisorID -> Professor.ProfID
 
 Task 4.1
 - 1)Functional dependencies:
@@ -63,5 +63,6 @@ Task 4.2
     -All original attributes (Student, Course, Instructor, Room, Building, Enrollment) are still present in the new tables.
     -Any original row can be reconstructed by joining the decomposed tables.
 The only thing that changes is that the information is now spread across several smaller tables instead of one big table.
+
 
 

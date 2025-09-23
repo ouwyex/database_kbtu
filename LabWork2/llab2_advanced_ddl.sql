@@ -3,22 +3,24 @@
 -- Task 1.1
 CREATE DATABASE university_main
   WITH TEMPLATE = template0
-  ENCODING = 'UTF8';
+  ENCODING = 'UTF8'
+  OWNER = CURRENT_USER;
 
 CREATE DATABASE university_archive
   WITH TEMPLATE = template0
-  CONNECTION LIMIT = 50;
+  CONNECTION LIMIT = 50
+  OWNER = CURRENT_USER;
 
 CREATE DATABASE university_test
   WITH TEMPLATE = template0
-  CONNECTION LIMIT = 10;
+  CONNECTION LIMIT = 10
+  OWNER = CURRENT_USER;
 
 -- Task 1.2
 CREATE DATABASE university_distributed
   WITH TEMPLATE = template0
   ENCODING = 'LATIN9'
-  LC_COLLATE = 'fr_FR.ISO8859-15'
-  LC_CTYPE = 'fr_FR.ISO8859-15';
+  OWNER = CURRENT_USER;
 
 -- Part 2
 
@@ -209,4 +211,4 @@ CREATE TABLE semester_calendar (
 DROP DATABASE IF EXISTS university_test;
 DROP DATABASE IF EXISTS university_distributed;
 
-CREATE DATABASE university_backup WITH TEMPLATE = university_main;
+CREATE DATABASE university_backup WITH TEMPLATE = university_main OWNER = CURRENT_USER;

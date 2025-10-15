@@ -9,7 +9,8 @@ CREATE TABLE employees(
 
 INSERT INTO employees (first_name, last_name, age, salary)
 VALUES ('John', 'Doe', 30, 3500),
-       ('Anna', 'Smith', 50, 4200);
+       ('Anna', 'Smith', 50, 4200),
+       ('ssss','wds',18,2000);
 
 -- 1.2
 CREATE TABLE products_catalog(
@@ -39,7 +40,7 @@ CREATE TABLE bookings(
 
 INSERT INTO bookings(check_in_date, check_out_date, num_guests)
 VALUES('2025-05-01', '2025-05-05', 4),
-       ('2025-06-10', '2025-06-15',2);
+      ('2025-06-10', '2025-06-15',2);
 
 -- 2.1
 CREATE TABLE customers(
@@ -132,6 +133,12 @@ create table authors(
 );
 
 create table publishers(
+  publisher_id SERIAL PRIMARY KEY,
+  publisher_name TEXT NOT NULL,
+  city TEXT
+);
+
+create table books(
   book_id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
   author_id INT REFERENCES authors,
@@ -152,16 +159,20 @@ CREATE TABLE categories(
     category_name TEXT NOT NULL
 );
 
-CREATE TABLE product_fk(
+CREATE TABLE products_fk(
     product_id SERIAL PRIMARY KEY ,
     product_name TEXT NOT NULL,
     category_id INT REFERENCES categories(category_id) ON DELETE RESTRICT
+);
+create table orders(
+    order_id SERIAL PRIMARY KEY ,
+    order_date DATE NOT NULL
 );
 
 CREATE TABLE order_items (
   item_id SERIAL PRIMARY KEY,
   order_id INT REFERENCES orders(order_id) ON DELETE CASCADE,
-  product_id INT REFERENCES product_fk(product_id),
+  product_id INT REFERENCES products_fk(product_id),
   quantity INT CHECK (quantity > 0)
 );
 
@@ -183,7 +194,8 @@ create table products_ecom(
   product_id SERIAL PRIMARY KEY ,
   name TEXT NOT NULL,
   description text,
-  price numeric check ( price >=  0 )
+  price numeric check ( price >=  0 ),
+  stock_quantity INT CHECK ( stock_quantity > 0 )
 );
 
 CREATE TABLE orders_ecom(
